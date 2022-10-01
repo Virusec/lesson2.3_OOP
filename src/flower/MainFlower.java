@@ -16,6 +16,11 @@ public class MainFlower {
                 rose, rose, rose,
                 chrysanthemum, chrysanthemum, chrysanthemum, chrysanthemum, chrysanthemum,
                 gypsophila);
+        System.out.println("----------------------");
+        Flower.printBouquet(25,
+                rose,rose,rose,
+                pion,pion,pion,pion,pion,
+                gypsophila,gypsophila);
     }
 
     private static void printCostAndExpireDaysOfBouquet(int floristPercentage, Flower... flowers) {
@@ -23,10 +28,13 @@ public class MainFlower {
         double sum = 0;
         int minExpiryDays = Integer.MAX_VALUE;
         for (Flower flower : flowers) {
-            if (minExpiryDays > flower.lifeSpan) {
-                minExpiryDays = flower.lifeSpan;
+            if (flower != null) {
+                if (minExpiryDays > flower.lifeSpan) {
+                    minExpiryDays = flower.lifeSpan;
+                }
+                sum += flower.getCost();
+                flower.printFlowers();
             }
-            sum += flower.getCost();
         }
         double result = sum * index;
         System.out.printf("Срок стояния букета - %d.\n", minExpiryDays);

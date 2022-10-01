@@ -72,9 +72,9 @@ public class MainCar {
 
         printCarInfo(lada);
         lada.changeTires();
-        lada.setRegistrationNumber("А123РРw123");
+        lada.setRegistrationNumber("А123МА13");
 
-        Car.Insurance basicInsurance = new Car.Insurance(LocalDate.of(2022, Month.MAY, 10), 2000, "555as123");
+        Car.Insurance basicInsurance = new Car.Insurance(LocalDate.of(2022, Month.MAY, 10), 2000, "а555aа123");
         basicInsurance.checkInsuranceDate();
         basicInsurance.checkNumberOfInsurance();
         printCarInfo(hyundai);

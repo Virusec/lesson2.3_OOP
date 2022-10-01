@@ -9,17 +9,13 @@ public class Human {
     String position;
 
     public Human(String name, String town, int year, String position) {
-        if (name == null) {
+        if (isNullOrEmptyOrBlank(name)) {
             this.name = "Информация не указана";
         } else {
             this.name = name;
         }
 
-        if (town == null) {
-            this.town = "Информация не указана";
-        } else {
-            this.town = town;
-        }
+        setTown(town);
 
         if (year > 0) {
             this.yearOfBirth = LocalDate.now().getYear() - year;
@@ -28,7 +24,7 @@ public class Human {
             System.out.println(name + " - не корректно указан год рождения.");
         }
 
-        if (position == null) {
+        if (isNullOrEmptyOrBlank(position)) {
             this.position = "Информация не указана";
         } else {
             this.position = position;
@@ -40,7 +36,7 @@ public class Human {
     }
 
     public void setTown(String town) {
-        if (town == null || town.isEmpty()) {
+        if (isNullOrEmptyOrBlank(town)) {
             this.town = "Информация не указана";
         } else {
             this.town = town;
@@ -65,5 +61,9 @@ public class Human {
                 + town + ". Я родился в "
                 + yearOfBirth + " году. Я работаю на должности "
                 + position + ". Будем знакомы!");
+    }
+
+    public static boolean isNullOrEmptyOrBlank(String value) {
+        return value == null || value.isBlank() || value.isEmpty();
     }
 }

@@ -111,8 +111,8 @@ public class Car {
     private final String model;
     private String color;
     private final String productionCountry;
-    private Double engineVolume;
-    private final Integer productionYear;
+    private double engineVolume;
+    private final int productionYear;
     private String transmission;
     private final String bodyType;
     private String registrationNumber;
@@ -125,8 +125,8 @@ public class Car {
                String model,
                String color,
                String productionCountry,
-               Double engineVolume,
-               Integer productionYear,
+               double engineVolume,
+               int productionYear,
                String transmission,
                String bodyType,
                String registrationNumber,
@@ -135,59 +135,43 @@ public class Car {
                Key key,
                Insurance insurance) {
 
-        if (brand == null) {
+        if (isNullOrEmptyOrBlank(brand)) {
             this.brand = "default";
         } else {
             this.brand = brand;
         }
 
-        if (model == null) {
+        if (isNullOrEmptyOrBlank(model)) {
             this.model = "default";
         } else {
             this.model = model;
         }
 
-        if (color == null) {
-            this.color = "белый";
-        } else {
-            this.color = color;
-        }
+        setColor(color);
 
-        if (productionCountry == null) {
+        if (isNullOrEmptyOrBlank(productionCountry)) {
             this.productionCountry = "default";
         } else {
             this.productionCountry = productionCountry;
         }
 
-        if (engineVolume == null) {
-            this.engineVolume = 1.5;
-        } else {
-            this.engineVolume = engineVolume;
-        }
+        setEngineVolume(engineVolume);
 
-        if (productionYear == null) {
+        if (productionYear <= 0) {
             this.productionYear = 2000;
         } else {
             this.productionYear = productionYear;
         }
 
-        if (transmission == null || transmission.isEmpty()) {
-            this.transmission = "default";
-        } else {
-            this.transmission = transmission;
-        }
+        setTransmission(transmission);
 
-        if (bodyType == null || bodyType.isBlank()) {
+        if (isNullOrEmptyOrBlank(bodyType)) {
             this.bodyType = "default";
         } else {
             this.bodyType = bodyType;
         }
 
-        if (registrationNumber == null || registrationNumber.isBlank()) {
-            this.registrationNumber = "default";
-        } else {
-            this.registrationNumber = registrationNumber;
-        }
+        setRegistrationNumber(registrationNumber);
 
         if (seats < 0) {
             this.seats = 4;
@@ -195,31 +179,19 @@ public class Car {
             this.seats = seats;
         }
 
-        if (tires == null || tires.isBlank()) {
-            this.tires = "Лето";
-        } else {
-            this.tires = tires;
-        }
+        setTires(tires);
 
-        if (key == null) {
-            this.key = new Key();
-        } else {
-            this.key = key;
-        }
+        setKey(key);
 
-        if (insurance == null) {
-            this.insurance = new Insurance();
-        }else {
-            this.insurance = insurance;
-        }
+        setInsurance(insurance);
     }
 
     public Car(String brand,
                String model,
                String color,
                String productionCountry,
-               Double engineVolume,
-               Integer productionYear,
+               double engineVolume,
+               int productionYear,
                String tires) {
         this(brand,
                 model,
@@ -249,7 +221,7 @@ public class Car {
         return productionCountry;
     }
 
-    public Integer getProductionYear() {
+    public int getProductionYear() {
         return productionYear;
     }
 
@@ -266,15 +238,23 @@ public class Car {
     }
 
     public void setColor(String color) {
-        this.color = color;
+        if (isNullOrEmptyOrBlank(color)) {
+            this.color = "белый";
+        } else {
+            this.color = color;
+        }
     }
 
-    public Double getEngineVolume() {
+    public double getEngineVolume() {
         return engineVolume;
     }
 
-    public void setEngineVolume(Double engineVolume) {
-        this.engineVolume = engineVolume;
+    public void setEngineVolume(double engineVolume) {
+        if (engineVolume <= 0) {
+            this.engineVolume = 1.5;
+        } else {
+            this.engineVolume = engineVolume;
+        }
     }
 
     public String getTransmission() {
@@ -282,7 +262,7 @@ public class Car {
     }
 
     public void setTransmission(String transmission) {
-        if (transmission == null || transmission.isBlank()) {
+        if (isNullOrEmptyOrBlank(transmission)) {
             this.transmission = "Ручная";
         } else {
             this.transmission = transmission;
@@ -301,12 +281,35 @@ public class Car {
         }
     }
 
+//    public void setRegistrationNumber(String registrationNumber) {
+//        char[] chars = registrationNumber.toCharArray();
+//        if (registrationNumber.length() != 9) {
+//            System.out.println("Не корректный номер");
+//        }
+//        if (!Character.isAlphabetic(registrationNumber.charAt(0)) && !Character.isAlphabetic(registrationNumber.charAt(4)) && !Character.isAlphabetic(registrationNumber.charAt(5))) {
+//            System.out.println("Не корректный номер");
+//        }
+//        if (!Character.isDigit(registrationNumber.charAt(1))
+//                || !Character.isDigit(registrationNumber.charAt(2))
+//                || !Character.isDigit(registrationNumber.charAt(3))
+//                || !Character.isDigit(registrationNumber.charAt(6))
+//                || !Character.isDigit(registrationNumber.charAt(7))
+//                || !Character.isDigit(registrationNumber.charAt(8))) {
+//            System.out.println("Не корректный номер");
+//        }
+//        this.registrationNumber = registrationNumber;
+//    }
+
     public String getTires() {
         return tires;
     }
 
     public void setTires(String tires) {
-        this.tires = tires;
+        if (isNullOrEmptyOrBlank(tires)) {
+            this.tires = "Лето";
+        } else {
+            this.tires = tires;
+        }
     }
 
     public Key getKey() {
@@ -314,7 +317,11 @@ public class Car {
     }
 
     public void setKey(Key key) {
-        this.key = key;
+        if (key == null) {
+            this.key = new Key();
+        } else {
+            this.key = key;
+        }
     }
 
     public Insurance getInsurance() {
@@ -322,7 +329,11 @@ public class Car {
     }
 
     public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
+        if (insurance == null) {
+            this.insurance = new Insurance();
+        } else {
+            this.insurance = insurance;
+        }
     }
 
     public void changeTires() {
@@ -331,5 +342,9 @@ public class Car {
         } else {
             setTires("Лето");
         }
+    }
+
+    public static boolean isNullOrEmptyOrBlank(String value) {
+        return value == null || value.isBlank() || value.isEmpty();
     }
 }

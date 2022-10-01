@@ -9,29 +9,10 @@ public class Flower {
 
 
     public Flower(String flowerName, String flowerColor, String country, double cost, int lifeSpan) {
-        if (flowerName == null || flowerName.isEmpty()) {
-            this.flowerName = "Цветок";
-        } else {
-            this.flowerName = flowerName;
-        }
-
-        if (flowerColor == null || flowerColor.isEmpty()) {
-            this.flowerColor = "белый";
-        } else {
-            this.flowerColor = flowerColor;
-        }
-
-        if (country == null || country.isEmpty()) {
-            this.country = "Россия";
-        } else {
-            this.country = country;
-        }
-
-        if (cost > 0) {
-            this.cost = cost;
-        } else {
-            this.cost = 1;
-        }
+        setFlowerName(flowerName);
+        setFlowerColor(flowerColor);
+        setCountry(country);
+        setCost(cost);
 
         if (lifeSpan <= 0) {
             this.lifeSpan = 3;
@@ -50,7 +31,7 @@ public class Flower {
     }
 
     public void setFlowerName(String flowerName) {
-        if (flowerName == null || flowerName.isEmpty()) {
+        if (isNullOrEmptyOrBlank(flowerName)) {
             this.flowerName = "Цветок";
         } else {
             this.flowerName = flowerName;
@@ -62,7 +43,7 @@ public class Flower {
     }
 
     public void setFlowerColor(String flowerColor) {
-        if (flowerColor == null || flowerColor.isEmpty()) {
+        if (isNullOrEmptyOrBlank(flowerColor)) {
             this.flowerColor = "белый";
         } else {
             this.flowerColor = flowerColor;
@@ -74,7 +55,7 @@ public class Flower {
     }
 
     public void setCountry(String country) {
-        if (country == null || country.isEmpty()) {
+        if (isNullOrEmptyOrBlank(country)) {
             this.country = "Россия";
         } else {
             this.country = country;
@@ -85,7 +66,7 @@ public class Flower {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         if (cost > 0) {
             this.cost = cost;
         } else {
@@ -102,29 +83,41 @@ public class Flower {
                 lifeSpan);
     }
 
-//    public static void printBouquet(int floristPercentage,Flower... flowers) {
-//        System.out.println("Срок стояния букета - " + findMinExpiryDays());
-//        System.out.println("Стоимость букета" + calculateCostBouquet(floristPercentage));
-//
-//    }
+    public static void printBouquet(int floristPercentage, Flower... flowers) {
+        for (Flower flower : flowers) {
+            if (flower != null) {
+                flower.printFlowers();
+            }
+        }
+        System.out.println("Срок стояния букета - " + findMinExpiryDays(flowers));
+        System.out.printf("Стоимость букета - %.2f", calculateCostBouquet(floristPercentage, flowers));
+    }
 
-//    public static int findMinExpiryDays(Flower... flowers) {
-//        int minExpiryDays = Integer.MAX_VALUE;
-//        for (int i = 0; i < flowers.length; i++) {
-//            if (minExpiryDays > flowers[i].lifeSpan) {
-//                minExpiryDays = flowers[i].lifeSpan;
-//            }
-//        }
-//        return minExpiryDays;
-//    }
-//
-//    public static double calculateCostBouquet(int floristPercentage, Flower... flowers) {
-//        double index = ((double) floristPercentage / 100) + 1;
-//        double sum = 0;
-//        for (Flower flower : flowers) {
-//            sum += flower.getCost();
-//        }
-//        double result = sum * index;
-//        return result;
-//    }
+    public static int findMinExpiryDays(Flower... flowers) {
+        int minExpiryDays = Integer.MAX_VALUE;
+        for (Flower flower : flowers) {
+            if (flower != null) {
+                if (minExpiryDays > flower.lifeSpan) {
+                    minExpiryDays = flower.lifeSpan;
+                }
+            }
+        }
+        return minExpiryDays;
+    }
+
+    public static double calculateCostBouquet(int floristPercentage, Flower... flowers) {
+        double index = ((double) floristPercentage / 100) + 1;
+        double sum = 0;
+        for (Flower flower : flowers) {
+            if (flower != null) {
+                sum += flower.getCost();
+            }
+        }
+        double result = sum * index;
+        return result;
+    }
+
+    public static boolean isNullOrEmptyOrBlank(String value) {
+        return value == null || value.isBlank() || value.isEmpty();
+    }
 }
